@@ -50,9 +50,9 @@ AutomataWindow::AutomataWindow(short init_size, short init_rule):
 	rule_box.pack_start(msg_label, Gtk::PACK_EXPAND_WIDGET, 5);
 	rule_box.pack_start(entry_rule, Gtk::PACK_EXPAND_WIDGET, 5);
 
-	entry_rule.set_max_length(3);
-	entry_rule.set_width_chars(5);
-	// causes entry_rule Gtk::Widget to have the keyboard focus for the Gtk::Window it's inside
+	entry_rule.set_increments(1.0, 1.0);
+	entry_rule.set_range(0.0, 255.0);
+	entry_rule.set_value(init_rule);
 	entry_rule.grab_focus();
 
 	set_button.set_border_width(5);
@@ -124,54 +124,18 @@ void AutomataWindow::on_screen_button_clicked()
 
 void AutomataWindow::on_set_button_clicked()
 {
-	bool isnum = true;
-
-	// testing the digits of the entry rule
-	Glib::ustring strtmp(entry_rule.get_text());
-	if (strtmp.size() == 0)
-		isnum = false;
-	else
-	{
-		for (int w = 0; w < strtmp.size(); w++)
-		{
-			if (!isdigit(strtmp[w]))
-			{
-				isnum = false;
-				break;
-			}
-		}
-	}
-
-
 	short new_rule;
 
-	if (isnum)
-		new_rule = atoi(strtmp.c_str());
+	new_rule = entry_rule.get_value_as_int();
 
-	if(new_rule >= 0 && new_rule <= 255 && isnum)
-	{
-		growth_area.set_rule(new_rule);
+	growth_area.set_rule(new_rule);
 
-		// applies the rule for the entire screen
-		for (int step = 1; step < growth_area.get_bounds(); step++)
-				growth_area.apply_rule(step);
+	// applies the rule for the entire screen
+	for (int step = 1; step < growth_area.get_bounds(); step++)
+		growth_area.apply_rule(step);
 
-		// set focus on entry_rule
-		entry_rule.grab_focus();
+	entry_rule.grab_focus();
 
-		// redraws the drawing area only and only if new_rule is a valid rule
-		this->queue_draw();
-	}
-	else
-	{
-		// shows a dialogue
-		Gtk::MessageDialog invalid(*this, "Invalid rule !");
-		invalid.run();
-
-		// reset text of entry rule after the OK button was pressed
-		entry_rule.set_text("");
-
-		// set focus on entry_rule
-		entry_rule.grab_focus();
-	}
+	// redraws the drawing area only and only if new_rule is a valid rule
+	this->queue_draw();
 }

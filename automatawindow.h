@@ -16,7 +16,7 @@ protected:
 	Gtk::Frame control_frame;
 	Gtk::HBox rule_box;
 	Gtk::Label msg_label;
-	Gtk::Entry entry_rule;
+	Gtk::SpinButton entry_rule;
 	Gtk::Button set_button;
 
 	virtual void on_five_button_clicked();
