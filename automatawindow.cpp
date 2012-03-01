@@ -5,9 +5,6 @@
 
 AutomataWindow::AutomataWindow(short init_size, short init_rule):
 	growth_area(init_size, init_rule),
-	five_button("next five states"),
-	twenty_button("next twenty states"),
-	screen_button("next screen"),
 	control_frame("rule control"),
 	msg_label("enter the rule [0..255]:"),
 	set_button("Apply")
@@ -28,20 +25,7 @@ AutomataWindow::AutomataWindow(short init_size, short init_rule):
 	main_box.add(widgets_box);
 
 	// widgets box children
-	widgets_box.add(button_box);
 	widgets_box.add(control_frame);
-
-	// button box children
-	five_button.signal_clicked().connect(sigc::mem_fun(*this, &AutomataWindow::on_five_button_clicked));
-	button_box.pack_start(five_button, Gtk::PACK_SHRINK);
-
-	twenty_button.signal_clicked().connect(sigc::mem_fun(*this, &AutomataWindow::on_twenty_button_clicked));
-	button_box.pack_start(twenty_button, Gtk::PACK_SHRINK);
-
-	screen_button.signal_clicked().connect(sigc::mem_fun(*this, &AutomataWindow::on_screen_button_clicked));
-	button_box.pack_start(screen_button, Gtk::PACK_SHRINK);
-
-	button_box.set_border_width(15);
 
 	// control frame children
 	control_frame.add(rule_box);
@@ -62,26 +46,6 @@ AutomataWindow::AutomataWindow(short init_size, short init_rule):
 	this->show_all_children();
 }
 
-void AutomataWindow::on_five_button_clicked()
-{
-	int step;
-
-	for (int count = 0; count < 5; count++)
-	{
-		step = growth_area.get_end();
-
-		if (step == growth_area.get_bounds() - 1)
-			step = 0;
-		else
-			step++;
-
-		growth_area.apply_rule(step);
-	}
-
-	// redraws the drawing area
-	this->queue_draw();
-}
-
 void AutomataWindow::on_twenty_button_clicked()
 {
 	int step;
@@ -91,26 +55,6 @@ void AutomataWindow::on_twenty_button_clicked()
 		step = growth_area.get_end();
 
 		if(step == growth_area.get_bounds() - 1)
-			step = 0;
-		else
-			step++;
-
-		growth_area.apply_rule(step);
-	}
-
-	// redraws the drawing area
-	this->queue_draw();
-}
-
-void AutomataWindow::on_screen_button_clicked()
-{
-	int step;
-
-	for (int count = 0; count < growth_area.get_bounds(); count++)
-	{
-		step = growth_area.get_end();
-
-		if (step == growth_area.get_bounds() - 1)
 			step = 0;
 		else
 			step++;
