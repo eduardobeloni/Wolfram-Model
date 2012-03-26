@@ -4,9 +4,10 @@
 #include <iostream>
 
 AutomataWindow::AutomataWindow(short init_size, short init_rule):
+	main_box(false, 10),
 	growth_area(init_size, init_rule),
-	control_frame("rule control"),
-	msg_label("enter the rule [0..255]:"),
+	control_frame("Rule control"),
+	msg_label("Enter rule [0..255]:"),
 	set_button("Apply")
 {
 	this->set_default_size(init_size, init_size);	
@@ -31,8 +32,8 @@ AutomataWindow::AutomataWindow(short init_size, short init_rule):
 	control_frame.add(rule_box);
 
 	// rule box children
-	rule_box.pack_start(msg_label, Gtk::PACK_EXPAND_WIDGET, 5);
-	rule_box.pack_start(entry_rule, Gtk::PACK_EXPAND_WIDGET, 5);
+	rule_box.pack_start(msg_label, Gtk::PACK_SHRINK, 5);
+	rule_box.pack_start(entry_rule, Gtk::PACK_SHRINK, 3);
 
 	entry_rule.set_increments(1.0, 1.0);
 	entry_rule.set_range(0.0, 255.0);

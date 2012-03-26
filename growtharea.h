@@ -5,14 +5,14 @@
 
 class GrowthArea: public Gtk::DrawingArea
 {
-	static const short MAXCELL = 480;
+	static const short MAXCELL = 500;
 
 private:
 	short sites[MAXCELL][MAXCELL];
 	short bounds, start, end;
 	short rule[8];
 
-	short new_value(short v2, short v1, short v0); // return a new value for some site
+	short new_value(short v2, short v1, short v0);
 
 public:
 	GrowthArea(short init_size, short default_rule = 90);
