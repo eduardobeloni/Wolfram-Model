@@ -1,0 +1,12 @@
+This simple project is a model of a celular automata based on the Wolfram Neighbourhood. It can be a good starting point for students of celular automata.
+
+Be aware that it has no indent standards and no good habits of coding at all. But it works fine.
+
+
+To compile, you'll need libgtkmm-2.4.
+
+Compile
+$ make
+
+Clean
+$ make clean
